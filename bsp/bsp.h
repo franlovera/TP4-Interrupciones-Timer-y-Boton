@@ -7,6 +7,7 @@
  * @param led Led a prender
  */
 void led_on(uint8_t led);
+void led_toggle(uint8_t led);
 
 /**
  * @brief Apaga un led
