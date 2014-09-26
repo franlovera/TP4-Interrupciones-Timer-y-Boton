@@ -15,6 +15,8 @@
 
 #define BOTON GPIO_Pin_0
 
+volatile uint16_t bsp_contMS=0;
+
 /* Puertos de los leds disponibles */
 GPIO_TypeDef* leds_port[] = { GPIOD, GPIOD, GPIOD, GPIOD };
 /* Leds disponibles */
@@ -61,12 +63,23 @@ void TIM2_IRQHandler(void) {
 	if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET) {
 		TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
 		APP_ISR_tim();
+		if(bsp_contMS > 0)
+			bsp_contMS--;
 	}
 }
 
 void bsp_led_init();
 void bsp_sw_init();
 void bsp_timer_config();
+
+
+void bsp_delayMs(uint16_t miliseconds){
+	bsp_contMS=miliseconds;
+	while(bsp_contMS);
+}
+
+
+
 
 void bsp_init() {
 	bsp_led_init();
