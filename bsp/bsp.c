@@ -56,14 +56,11 @@ void EXTI0_IRQHandler(void) {
  * @brief Interrupcion llamada al pasar 1ms
  */
 void TIM2_IRQHandler(void) {
-	static uint16_t count = 0;
+
 
 	if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET) {
 		TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
-		if (count++ > 1000) {
-			APP_ISR_tim();
-			count = 0;
-		}
+		APP_ISR_tim();
 	}
 }
 
